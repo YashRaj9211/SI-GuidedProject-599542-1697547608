@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machine Learning Model Interface</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        #prediction-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 300px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        #image-preview {
+            max-width: 500px;
+            max-height: 400px;
+            margin-top: 20px;
+            border: none;
+        }
+
+        .image-container {
+            text-align: center;
+            display: none; /* Hide until an image is chosen */
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Upload an image for classification</h1>
+
+<!-- The form for file upload -->
+<!-- <form action="/predict" method="post" enctype="multipart/form-data"> -->
+    <input type="file" name="file" id="file" accept="image/*">
+    <button
+     onclick="imgUp()">Upload Image</button>
+<!-- </form> -->
+
+<!-- Section to display the prediction result -->
+
+<div class="image-container" id="image-container">
+    <img id="image-preview" alt="Image preview...">
+</div>
+
+<!-- Section to display the prediction result -->
+<div id="prediction-result">
+    <!-- The result will be displayed here after processing -->
+</div>
+
+
+</body>
+<script src="{{ url_for('static', filename='javascript/index.js') }}">
+    function previewImage() {
+        var imageContainer = document.getElementById('image-container');
+        var preview = document.getElementById('image-preview');
+        var file = document.getElementById('file').files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            imageContainer.style.display = 'block'; // Show the image container
+        }
+
+        if (file) {
+            reader.readAsDataURL(file); // Reads the image as a data URL
+        } else {
+            preview.src = "";
+            imageContainer.style.display = 'none'; // Hide the image container if no image is chosen
+        }
+    }
+</script>
+</html>
